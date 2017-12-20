@@ -1,6 +1,6 @@
 # PlugPrayerFlag
 
-**TODO: Add description**
+This package adds an HTTP header to all Plug responses, to spread good will and compassion throughout the Web: ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྂ༔
 
 ## Installation
 
@@ -10,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-      [{:plug_prayer_flag, "~> 0.1.0"}]
+      [{:plug_prayer_flag, "~> 1.0.0-rc"}]
     end
     ```
 

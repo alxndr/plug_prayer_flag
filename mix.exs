@@ -3,7 +3,7 @@ defmodule PlugPrayerFlag.Mixfile do
 
   def project do
     [app: :plug_prayer_flag,
-     version: "0.1.0",
+     version: "1.0.0-rc",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -27,6 +27,17 @@ defmodule PlugPrayerFlag.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:plug, "~> 1.4"},
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["alxndr+hex.pm-package@gmail.com"],
+      licenses: ["GPL-3.0+"],
+      links: %{"GitHub" => "https://github.com/alxndr/plug_prayer_flag"},
+      source_url: "https://github.com/alxndr/plug_prayer_flag",
+    ]
   end
 end

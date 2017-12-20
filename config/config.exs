@@ -20,6 +20,7 @@ use Mix.Config
 #
 #     config :logger, level: :info
 #
+config :plug, :validate_header_keys_during_test, false
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

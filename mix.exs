@@ -3,7 +3,7 @@ defmodule PlugPrayerFlag.Mixfile do
 
   def project do
     [app: :plug_prayer_flag,
-     version: "1.0.0-rc",
+     version: "1.0.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

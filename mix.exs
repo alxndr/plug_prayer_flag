@@ -7,6 +7,8 @@ defmodule PlugPrayerFlag.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     description: description(),
+     package: package(),
      deps: deps()]
   end
 
@@ -30,6 +32,10 @@ defmodule PlugPrayerFlag.Mixfile do
     [
       {:plug, "~> 1.4"},
     ]
+  end
+
+  defp description do
+    "This package adds an HTTP header to all Plug responses, to spread good will and compassion throughout the Web."
   end
 
   defp package do

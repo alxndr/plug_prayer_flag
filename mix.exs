@@ -12,24 +12,13 @@ defmodule PlugPrayerFlag.Mixfile do
      deps: deps()]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
   def application do
     [applications: [:logger]]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0", only: :dev}, # required for publishin on hex.pm
       {:plug, "~> 1.4"},
     ]
   end
@@ -40,7 +29,7 @@ defmodule PlugPrayerFlag.Mixfile do
 
   defp package do
     [
-      maintainers: ["alxndr+hex.pm-package@gmail.com"],
+      maintainers: ["alxndr+hexpm-plugprayerflag@gmail.com"],
       licenses: ["GPL-3.0+"],
       links: %{"GitHub" => "https://github.com/alxndr/plug_prayer_flag"},
       source_url: "https://github.com/alxndr/plug_prayer_flag",

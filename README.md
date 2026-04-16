@@ -11,23 +11,29 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 1. The morning of an auspicious date, add `plug_prayer_flag` to your list of dependencies in `mix.exs`:
 
+```
     def deps do
       [{:plug_prayer_flag, "~> 1.0.0"}]
     end
+```
 
 2. Ensure `plug_prayer_flag` is started before your application:
 
+```
     def application do
       [applications: [:plug_prayer_flag]]
     end
+```
 
 3. Use `PlugPrayerFlag` in `web/router.ex`:
 
+```
     pipeline :browser do
       plug :accepts, ["html"]
       # ...
       plug PlugPrayerFlag
     end
+```
 
 4. Rejoice! Now the other servers, wires, and fiber which will carry your HTTP payloads will be purified and sanctified.
 

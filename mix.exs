@@ -3,8 +3,8 @@ defmodule PlugPrayerFlag.Mixfile do
 
   def project do
     [app: :plug_prayer_flag,
-     version: "1.0.0",
-     elixir: "~> 1.14",
+     version: "1.0.1-rc",
+     elixir: "~> 1.15", # lowest version of Elixir tested on CI
      start_permanent: Mix.env() == :prod,
      description: description(),
      package: package(),

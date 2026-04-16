@@ -1,6 +1,7 @@
 defmodule PlugPrayerFlagTest do
   use ExUnit.Case, async: true
-  use Plug.Test
+  import Plug.Test
+  import Plug.Conn
 
   doctest PlugPrayerFlag
 

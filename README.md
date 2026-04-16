@@ -1,6 +1,6 @@
 # PlugPrayerFlag
 
-This package adds an HTTP header to all Plug responses, to spread good will and compassion throughout the Web. When this plug is added to a Phoenix route or pipeline, all responses will include this:
+This package adds an HTTP header to all [Plug](https://github.com/elixir-plug/plug) responses, to spread good will and compassion throughout the Web. When this plug is added to a Phoenix route or pipeline, all responses will include this:
 ### flag: ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྂ༔
 
 [More information on prayer flags can be found at Wikipedia.][wikipedia-prayer-flags]

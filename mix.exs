@@ -2,13 +2,21 @@ defmodule PlugPrayerFlag.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :plug_prayer_flag,
-     version: "1.0.1-rc",
-     elixir: "~> 1.15", # lowest version of Elixir tested on CI
-     start_permanent: Mix.env() == :prod,
-     description: description(),
-     package: package(),
-     deps: deps()]
+    [
+      app: :plug_prayer_flag,
+      version: "1.1.0-rc",
+      elixir: "~> 1.15", # lowest version of Elixir tested on CI
+      start_permanent: Mix.env() == :prod,
+      description: description(),
+      package: package(),
+      deps: deps(),
+    ]
+  end
+
+  def cli do
+    [preferred_envs: [
+      "test.integration": :test,
+    ]]
   end
 
   def application do

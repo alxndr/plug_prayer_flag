@@ -1,0 +1,104 @@
+defmodule PlugPrayerFlag.IntegrationTest do
+  use ExUnit.Case
+
+  @moduletag :integration
+
+  # Resolved at compile time so the injected mix.exs dep gets the correct absolute path.
+  @this_package_path File.cwd!()
+
+  setup do
+    tmp_dir =
+      System.tmp_dir!()
+      |> Path.join("plug_prayer_flag_integration_#{System.unique_integer([:positive])}")
+
+    File.mkdir_p!(tmp_dir)
+    on_exit(fn -> File.rm_rf!(tmp_dir) end)
+
+    {:ok, tmp_dir: tmp_dir}
+  end
+
+  test "header appears on a response in a fresh consumer app", %{tmp_dir: tmp_dir} do
+    {_output, 0} = System.cmd("mix", ["new", "consumer_app"], cd: tmp_dir)
+    app_dir = Path.join(tmp_dir, "consumer_app")
+
+    # Patch only the deps list in the mix.exs that `mix new` generated, leaving
+    # everything else (module name, project/0 keys, application/0, etc.) as-is.
+    # This way the test stays resilient if Mix changes its project format in future.
+    mix_exs_path = Path.join(app_dir, "mix.exs")
+    patched_mix_exs =
+      mix_exs_path
+      |> File.read!()
+      |> patch_deps()
+    File.write!(mix_exs_path, patched_mix_exs)
+
+    # Write our router and a test for it — these are domain files, not mix-generated.
+    File.mkdir_p!(Path.join(app_dir, "lib/consumer_app"))
+    File.write!(Path.join(app_dir, "lib/consumer_app/router.ex"), router_content())
+    File.write!(Path.join(app_dir, "test/router_test.exs"), router_test_content())
+
+    # Suppress Plug's header-key validation noise in the test env.
+    File.mkdir_p!(Path.join(app_dir, "config"))
+    File.write!(Path.join(app_dir, "config/config.exs"), config_content())
+
+    {deps_output, deps_exit} = System.cmd("mix", ["deps.get"], cd: app_dir)
+    assert deps_exit == 0, "mix deps.get failed:\n#{deps_output}"
+
+    {test_output, test_exit} = System.cmd("mix", ["test"], cd: app_dir)
+    assert test_exit == 0, "Consumer app tests failed:\n#{test_output}"
+  end
+
+  # Replace the deps function body that `mix new` scaffolds with our actual deps.
+  # Using a regex so this is insensitive to whitespace or comment changes inside
+  # the generated deps block.
+  defp patch_deps(mix_exs_content) do
+    our_deps = """
+      defp deps do
+        [
+          {:plug, "~> 1.14"},
+          {:plug_prayer_flag, path: "#{@this_package_path}"},
+        ]
+      end\
+    """
+
+    Regex.replace(~r/defp deps do\n.*?end/s, mix_exs_content, our_deps)
+  end
+
+  defp router_content do
+    """
+    defmodule ConsumerApp.Router do
+      use Plug.Builder
+
+      plug PlugPrayerFlag
+      plug :send_response
+
+      def send_response(conn, _opts) do
+        Plug.Conn.send_resp(conn, 200, "ok")
+      end
+    end
+    """
+  end
+
+  defp router_test_content do
+    """
+    defmodule ConsumerApp.RouterTest do
+      use ExUnit.Case
+      import Plug.Test
+
+      @opts ConsumerApp.Router.init([])
+
+      test "response includes the prayer flag header with the mantra" do
+        conn = conn(:get, "/") |> ConsumerApp.Router.call(@opts)
+        prayer_flag_header_value = conn |> Plug.Conn.get_resp_header("flag") |> List.first()
+        assert prayer_flag_header_value == "ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྂ༔"
+      end
+    end
+    """
+  end
+
+  defp config_content do
+    """
+    import Config
+    config :plug, :validate_header_keys_during_test, false
+    """
+  end
+end

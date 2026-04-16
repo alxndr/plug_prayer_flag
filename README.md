@@ -37,6 +37,21 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 4. Rejoice! Now the other servers, wires, and fiber which will carry your HTTP payloads will be purified and sanctified.
 
+## Configuration
+
+By default the header name is `flag` and the value is the Tibetan mantra `ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྂ༔`. Both can be overridden:
+
+```elixir
+# custom header name (value remains the Tibetan mantra)
+plug PlugPrayerFlag, header_name: "x-mantra"
+
+# custom header value (header name remains "flag")
+plug PlugPrayerFlag, header_value: "om mani padme hum"
+
+# both customized
+plug PlugPrayerFlag, header_name: "x-mantra", header_value: "om mani padme hum"
+```
+
 -------
 
 [wikipedia-prayer-flags]: https://wikipedia.org/wiki/Prayer_flag

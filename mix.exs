@@ -3,23 +3,22 @@ defmodule PlugPrayerFlag.Mixfile do
 
   def project do
     [app: :plug_prayer_flag,
-     version: "1.0.0",
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
+     version: "1.0.1-rc",
+     elixir: "~> 1.15", # lowest version of Elixir tested on CI
+     start_permanent: Mix.env() == :prod,
      description: description(),
      package: package(),
      deps: deps()]
   end
 
   def application do
-    [applications: [:logger]]
+    [extra_applications: [:logger]]
   end
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :dev}, # required for publishin on hex.pm
-      {:plug, "~> 1.4"},
+      {:ex_doc, ">= 0.0.0", only: :dev}, # required for publishing on hex.pm
+      {:plug, "~> 1.14"},
     ]
   end
 
